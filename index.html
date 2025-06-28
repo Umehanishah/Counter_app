@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stopwatch App</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding: 50px;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    #time {
+      font-size: 48px;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    button {
+      font-size: 18px;
+      margin: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Stopwatch / Counter app ⏱</h1>
+  <div id="time">00:00:00</div>
+
+  <button id="start">Start</button>
+  <button id="stop">Stop</button>
+  <button id="reset">Reset</button>
+
+  <script>
+    let seconds = 0;
+    let interval = null;
+
+    const timeDisplay = document.getElementById("time");
+    const startBtn = document.getElementById("start");
+    const stopBtn = document.getElementById("stop");
+    const resetBtn = document.getElementById("reset");
+
+    function formatTime(seconds) {
+      const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+      const secs = String(seconds % 60).padStart(2, '0');
+      return `${hrs}:${mins}:${secs}`;
+    }
+
+    function updateTime() {
+      seconds++;
+      timeDisplay.textContent = formatTime(seconds);
+    }
+
+    startBtn.onclick = () => {
+      if (!interval) {
+        interval = setInterval(updateTime, 1000);
+      }
+    };
+
+    stopBtn.onclick = () => {
+      clearInterval(interval);
+      interval = null;
+    };
+
+    resetBtn.onclick = () => {
+      clearInterval(interval);
+      interval = null;
+      seconds = 0;
+      timeDisplay.textContent = formatTime(seconds);
+    };
+  </script>
+
+</body>
+</html>
